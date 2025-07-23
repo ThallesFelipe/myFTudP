@@ -1,0 +1,321 @@
+<!--
+/**
+ * @file index.html
+ * @description Interface principal da aplicação myFTudP Cliente.
+ * Esta página HTML implementa uma interface de usuário moderna e responsiva
+ * para operações FTP sobre UDP, incluindo tela de conexão, navegação de arquivos,
+ * transferências e console de comandos.
+ * 
+ * Estrutura da Interface:
+ * - Tela de Conexão: Formulário para conectar ao servidor
+ * - Tela Principal: Interface de dois painéis (local/remoto)
+ * - Painéis de Transferência: Monitoramento de uploads/downloads
+ * - Console: Feedback de comandos e operações
+ * - Modais: Criação de diretórios e confirmações
+ * 
+ * Tecnologias:
+ * - HTML5 semântico
+ * - CSS Grid e Flexbox para layout
+ * - Material Symbols para ícones
+ * - JavaScript ES6+ (app.js)
+ * 
+ * Acessibilidade:
+ * - Labels apropriados para campos de formulário
+ * - Estrutura semântica com elementos HTML adequados
+ * - Suporte a navegação por teclado
+ * - Indicadores visuais para estados da aplicação
+ * 
+ * @author Thalles Felipe
+ * @version 1.0.0
+ * @since 2025-01-23
+ */
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myFTudP</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Material Symbols para ícones modernos -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+</head>
+<body>
+    <!-- 
+    =================================================================================
+    TELA DE CONEXÃO
+    =================================================================================
+    Primeira tela apresentada ao usuário, contendo formulário de conexão ao servidor
+    e informações de contas de teste disponíveis.
+    -->
+    <div id="connectionScreen" class="screen active">
+        <div class="connection-container">
+            <!-- Logo e identificação da aplicação -->
+            <div class="logo">
+                <img src="../../../assets/images/logo.png" alt="myFTudP Logo" class="logo-image">
+                <h1>myFTudP</h1>
+                <p>Cliente FTP com protocolo UDP</p>
+            </div>
+            
+            <!-- Formulário de conexão -->
+            <div class="connection-form">
+                <h2>Conectar ao Servidor</h2>
+                
+                <!-- Campo de endereço do servidor -->
+                <div class="form-group">
+                    <label for="serverAddress">
+                        <span class="material-symbols-outlined">public</span>
+                        Endereço do Servidor
+                    </label>
+                    <input type="text" id="serverAddress" value="localhost" placeholder="localhost ou IP" autocomplete="off">
+                </div>
+                
+                <!-- Campo de porta do servidor -->
+                <div class="form-group">
+                    <label for="serverPort">
+                        <span class="material-symbols-outlined">electrical_services</span>
+                        Porta
+                    </label>
+                    <input type="number" id="serverPort" value="21000" placeholder="21000" min="1" max="65535">
+                </div>
+                
+                <!-- Campo de usuário -->
+                <div class="form-group">
+                    <label for="username">
+                        <span class="material-symbols-outlined">person</span>
+                        Usuário
+                    </label>
+                    <input type="text" id="username" placeholder="Digite seu usuário" autocomplete="username">
+                </div>
+                
+                <!-- Campo de senha -->
+                <div class="form-group">
+                    <label for="password">
+                        <span class="material-symbols-outlined">lock</span>
+                        Senha
+                    </label>
+                    <input type="password" id="password" placeholder="Digite sua senha">
+                </div>
+                
+                <button id="connectBtn" class="btn btn-primary">
+                    <span class="material-symbols-outlined">electrical_services</span>
+                    Conectar
+                </button>
+                
+                <div id="connectionStatus" class="status-message"></div>
+            </div>
+            
+            <div class="test-accounts">
+                <h3>Contas de Teste</h3>
+                <div class="test-account" data-user="thalles" data-pass="thalles123">
+                    <strong>thalles</strong> / thalles123
+                </div>
+                <div class="test-account" data-user="daniel" data-pass="daniel123">
+                    <strong>daniel</strong> / daniel123
+                </div>
+                <div class="test-account" data-user="teste" data-pass="teste123">
+                    <strong>teste</strong> / teste123
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainScreen" class="screen">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo-small">
+                    <img src="../../../assets/images/logo.png" alt="myFTudP Logo" class="logo-small-image">
+                    myFTudP
+                </div>
+                <div class="connection-info">
+                    <span id="connectedServer"></span>
+                    <span id="loggedUser"></span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <button id="refreshBtn" class="btn btn-icon" title="Atualizar">
+                    <span class="material-symbols-outlined">refresh</span>
+                </button>
+                <button id="disconnectBtn" class="btn btn-secondary">
+                    <span class="material-symbols-outlined">logout</span>
+                    Desconectar
+                </button>
+            </div>
+        </header>
+
+        <div class="nav-bar">
+            <div class="current-path">
+                <span class="material-symbols-outlined">folder</span>
+                <span id="currentPath">/</span>
+            </div>
+            <div class="nav-buttons">
+                <button id="backBtn" class="btn btn-icon" title="Voltar">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <button id="homeBtn" class="btn btn-icon" title="Raiz">
+                    <span class="material-symbols-outlined">home</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="panel local-panel">
+                <div class="panel-header">
+                    <h3>
+                        <span class="material-symbols-outlined">computer</span>
+                        Arquivos Locais
+                    </h3>
+                    <div class="panel-controls">
+                        <button id="localBrowseBtn" class="btn btn-small">
+                            <span class="material-symbols-outlined">folder_open</span>
+                            Navegar
+                        </button>
+                        <button id="localRefreshBtn" class="btn btn-small" title="Atualizar">
+                            <span class="material-symbols-outlined">refresh</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="current-local-path">
+                    <span class="material-symbols-outlined">folder</span>
+                    <span id="localPath"></span>
+                </div>
+                
+                <div class="file-list" id="localFileList">
+                    <div class="loading">
+                        <span class="material-symbols-outlined spinning">progress_activity</span>
+                        Carregando...
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel remote-panel">
+                <div class="panel-header">
+                    <h3>
+                        <span class="material-symbols-outlined">dns</span>
+                        Arquivos Remotos
+                    </h3>
+                    <div class="panel-controls">
+                        <button id="remoteMkdirBtn" class="btn btn-small">
+                            <span class="material-symbols-outlined">create_new_folder</span>
+                            Nova Pasta
+                        </button>
+                        <button id="remoteRefreshBtn" class="btn btn-small" title="Atualizar">
+                            <span class="material-symbols-outlined">refresh</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="file-list" id="remoteFileList">
+                    <div class="loading">
+                        <span class="material-symbols-outlined spinning">progress_activity</span>
+                        Carregando...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="transfer-panel">
+            <div class="panel-header">
+                <h3>
+                    <span class="material-symbols-outlined">swap_horiz</span>
+                    Transferências
+                </h3>
+                <button id="clearTransfersBtn" class="btn btn-small">
+                    <span class="material-symbols-outlined">delete</span>
+                    Limpar
+                </button>
+            </div>
+            
+            <div id="transferList" class="transfer-list">
+                <div class="no-transfers">
+                    <span class="material-symbols-outlined">info</span>
+                    Nenhuma transferência ativa
+                </div>
+            </div>
+        </div>
+
+        <div class="console-panel">
+            <div class="panel-header">
+                <h3>
+                    <span class="material-symbols-outlined">terminal</span>
+                    Console
+                </h3>
+                <div class="console-controls">
+                    <input type="text" id="commandInput" placeholder="Digite um comando (ex: ls, cd pasta, mkdir nova_pasta)">
+                    <button id="sendCommandBtn" class="btn btn-small">
+                        <span class="material-symbols-outlined">send</span>
+                        Enviar
+                    </button>
+                    <button id="clearConsoleBtn" class="btn btn-small">
+                        <span class="material-symbols-outlined">delete</span>
+                        Limpar
+                    </button>
+                </div>
+            </div>
+            
+            <div id="consoleOutput" class="console-output"></div>
+        </div>
+    </div>
+
+    <div id="mkdirModal" class="modal">
+        <div class="modal-content mkdir-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="material-symbols-outlined">create_new_folder</span>
+                    <h3>Nova Pasta</h3>
+                </div>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newDirName">
+                        <span class="material-symbols-outlined">folder</span>
+                        Nome da pasta
+                    </label>
+                    <input type="text" id="newDirName" placeholder="Digite o nome da pasta" autocomplete="off">
+                </div>
+                <div class="modal-info">
+                    <span class="material-symbols-outlined">info</span>
+                    <span>A pasta será criada no diretório atual</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="mkdirConfirmBtn" class="btn btn-primary">
+                    <span class="material-symbols-outlined">add</span>
+                    Criar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirmar</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmBtn" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="contextMenu" class="context-menu">
+        <div class="context-item" data-action="download">
+            <span class="material-symbols-outlined">download</span>
+            Download
+        </div>
+        <div class="context-item" data-action="delete">
+            <span class="material-symbols-outlined">delete</span>
+            Excluir
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

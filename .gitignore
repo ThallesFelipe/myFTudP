@@ -1,0 +1,179 @@
+# ============================================================================
+# .gitignore para projeto myFTudP
+# ============================================================================
+# Define arquivos e diretórios que devem ser ignorados pelo controle de versão Git.
+# Organizado por categorias para manutenção e compreensão facilitadas.
+#
+# Autor: Thalles Felipe
+# Versão: 1.0.0
+# Data: 2025-01-23
+# ============================================================================
+
+# ============================================================================
+# DEPENDÊNCIAS E PACKAGES
+# ============================================================================
+# Diretórios de dependências instaladas via npm/yarn
+node_modules/
+
+# Logs de debug e erro dos package managers
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================================================
+# ARQUIVOS DE BUILD E DISTRIBUIÇÃO
+# ============================================================================
+# Outputs de build da aplicação
+dist/
+build/
+out/
+
+# Arquivos empacotados do Electron
+*.asar
+app/
+
+# Executáveis gerados pelo electron-builder
+*.app         # macOS
+*.exe         # Windows
+*.dmg         # macOS disk image
+*.deb         # Debian package
+*.rpm         # Red Hat package
+*.flatpak     # Flatpak package
+*.AppImage    # Linux AppImage
+
+# ============================================================================
+# VARIÁVEIS DE AMBIENTE E CONFIGURAÇÕES
+# ============================================================================
+# Arquivos de configuração de ambiente (podem conter dados sensíveis)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ============================================================================
+# IDEs E EDITORES
+# ============================================================================
+# Visual Studio Code (configurações de usuário específicas)
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+
+# Vim/Emacs arquivos temporários
+*.swp
+*.swo
+*~
+
+# ============================================================================
+# SISTEMAS OPERACIONAIS
+# ============================================================================
+# macOS arquivos de sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows arquivos de sistema e thumbnails
+ehthumbs.db
+Thumbs.db
+
+# ============================================================================
+# LOGS E DADOS DE RUNTIME
+# ============================================================================
+# Diretório de logs
+logs
+*.log
+
+# Dados de runtime do Node.js
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ============================================================================
+# COBERTURA DE TESTES
+# ============================================================================
+# Diretório de cobertura gerado por ferramentas como istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# ============================================================================
+# CONFIGURAÇÕES DE BUILD E FERRAMENTAS
+# ============================================================================
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (Node.js)
+build/Release
+
+# Dependency directories (alternativas ao node_modules)
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack' (pacotes gerados)
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (se usar Parcel)
+.cache
+.parcel-cache
+
+# ============================================================================
+# ARQUIVOS ESPECÍFICOS DO SERVIDOR
+# ============================================================================
+# Diretório de uploads e arquivos temporários do servidor
+# (manter alguns exemplos mas ignorar uploads de usuários)
+data/server-files/uploads/
+data/server-files/temp/
+
+# Arquivos de log específicos do servidor myFTudP
+data/logs/
+*.ftp.log
+
+# ============================================================================
+# ARQUIVOS TEMPORÁRIOS E BACKUP
+# ============================================================================
+# Arquivos temporários diversos
+*.tmp
+*.temp
+
+# Arquivos de backup
+*.bak
+*.backup
+*~
+
+# ============================================================================
+# CONFIGURAÇÕES DE DESENVOLVIMENTO
+# ============================================================================
+# Configurações locais de desenvolvimento
+config/local.json
+config/development.local.json
+
+# Chaves e certificados (se implementar HTTPS/TLS no futuro)
+*.key
+*.pem
+*.crt
+*.p12
+
+# Base de dados local (se implementar persistência)
+*.db
+*.sqlite
+*.sqlite3
+
+# ============================================================================
+# DOCUMENTAÇÃO GERADA
+# ============================================================================
+# Documentação gerada automaticamente (manter apenas fontes)
+docs/generated/
+api-docs/
