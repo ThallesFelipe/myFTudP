@@ -1,134 +1,72 @@
-/**
- * @file styles.css
- * @description Folha de estilos principal da aplicação myFTudP Cliente.
- * Implementa um design system moderno com base em Material Design 3,
- * usando CSS Grid e Flexbox para layouts responsivos.
- * 
- * Estrutura:
- * - Reset e configurações globais
- * - Variáveis CSS (Design Tokens)
- * - Animações e transições
- * - Componentes base (botões, inputs, modais)
- * - Layouts específicos (tela de conexão, interface principal)
- * - Estados e interações
- * - Media queries para responsividade
- * 
- * Design System:
- * - Paleta de cores minimalista (preto/branco/cinza)
- * - Tipografia moderna com fallbacks
- * - Espaçamentos consistentes
- * - Sombras suaves para profundidade
- * - Animações fluidas para feedback visual
- * 
- * @author Thalles Felipe
- * @version 1.0.0
- * @since 2025-01-23
- */
-
-/* =============================================================================
-   RESET E CONFIGURAÇÕES GLOBAIS
-   ============================================================================= */
-
-/**
- * Reset básico para consistência entre navegadores
- * Remove margens, paddings padrão e define box-sizing border-box
- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/**
- * Configurações globais do body
- * Define fonte principal, cores base e comportamento de overflow
- */
 body {
     font-family: 'Roboto Flex', 'Roboto', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: #ffffff;
     color: #000000;
     line-height: 1.5;
-    overflow: hidden; /* Previne scroll em tela cheia do Electron */
+    overflow: hidden;
 }
 
-/* =============================================================================
-   DESIGN TOKENS (VARIÁVEIS CSS)
-   ============================================================================= */
-
-/**
- * Variáveis CSS para Design System
- * Centraliza cores, sombras e outros valores reutilizáveis
- */
 :root {
-    /* Cores primárias */
     --primary: #000000;
     --primary-container: #f5f5f5;
     --on-primary: #ffffff;
-    
-    /* Cores secundárias */
+
     --secondary: #666666;
     --secondary-container: #e0e0e0;
-    
-    /* Cores de superfície */
+
     --surface: #ffffff;
     --surface-variant: #f0f0f0;
     --on-surface: #000000;
     --on-surface-variant: #666666;
-    
-    /* Contornos e divisores */
+
     --outline: #cccccc;
-    
-    /* Estados semânticos */
+
     --success: #28a745;
     --error: #dc3545;
-    
-    /* Sistema de sombras */
+
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
     --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* =============================================================================
-   ANIMAÇÕES E TRANSIÇÕES
-   ============================================================================= */
-
-/**
- * Animação de rotação para indicadores de loading
- */
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-/**
- * Animação de ripple para feedback de clique
- */
 @keyframes ripple {
-    from { transform: scale(0); opacity: 0.2; }
-    to { transform: scale(2); opacity: 0; }
+    from {
+        transform: scale(0);
+        opacity: 0.2;
+    }
+
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
 }
 
-/**
- * Classe utilitária para elementos em rotação
- */
 .spinning {
     animation: spin 1s linear infinite;
 }
 
-/* =============================================================================
-   ÍCONES MATERIAL SYMBOLS
-   ============================================================================= */
-
-/**
- * Configuração padrão para ícones Material Symbols
- * Define peso, preenchimento e outras propriedades visuais
- */
 .material-symbols-outlined {
     font-variation-settings:
-    'FILL' 0,        /* Sem preenchimento */
-    'wght' 400,      /* Peso normal */
-    'GRAD' 0,
-    'opsz' 24;
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
     user-select: none;
 }
 
@@ -701,7 +639,6 @@ body {
     justify-content: flex-end;
 }
 
-/* Modal específico para mkdir */
 .mkdir-modal {
     min-width: 440px;
     max-width: 500px;
